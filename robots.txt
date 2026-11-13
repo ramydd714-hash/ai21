@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://rafiq-ai-delta.vercel.app/sitemap.xml
