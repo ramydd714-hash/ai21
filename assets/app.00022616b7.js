@@ -424,7 +424,7 @@ function renderPlans(){
       el('h3',{text:p.n}),
       el('span',{class:'pr',text: cur === 'eg' ? p.eg : p.us}),
       el('p',{class:'muted',text:p.d}), ul,
-      el('a',{class:'btn ' + (p.hl ? 'pri' : 'sec'),href:'#contact',text:p.cta})));
+      el('a',{class:'btn ' + (p.hl ? 'pri' : 'sec'),href:BASE + 'contact/',text:p.cta})));
   });
 }
 function renderSelect(){
