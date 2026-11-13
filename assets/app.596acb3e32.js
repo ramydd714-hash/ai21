@@ -529,6 +529,8 @@ window.addEventListener('hashchange', route);
   const set = open => { links.classList.toggle('open', open); btn.setAttribute('aria-expanded', String(open)); btn.setAttribute('aria-label', open ? 'إغلاق القائمة' : 'فتح القائمة'); };
   btn.onclick = () => set(!links.classList.contains('open'));
   links.addEventListener('click', e => { if (e.target.closest('a')) set(false); });
+  document.addEventListener('click', e => { if (links.classList.contains('open') && !e.target.closest('#links, #menuBtn')) set(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && links.classList.contains('open')) { set(false); btn.focus(); } });
 })();
 (function(){
   // The one orchestrated moment: the 2:14 a.m. conversation plays once on load.
