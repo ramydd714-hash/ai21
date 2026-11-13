@@ -2,6 +2,16 @@ const CFG = {"whatsapp": "", "email": "", "ga_id": "", "pixel_id": "", "base": "
 const WHATSAPP = CFG.whatsapp, EMAIL = CFG.email, BASE = CFG.base;
 const PAGE = document.body.dataset.page || 'home', PAGE_SVC = document.body.dataset.svc || '';
 const svcUrl = id => BASE + 'services/' + id + '/';
+const PAGE_CAT = document.body.dataset.cat || '', PAGE_LIVE = !!document.body.dataset.live;
+const DIVURL = {auto:'automation/', apps:'apps/', web:'web/'}, CATSLUG = {reply:'reply', sales:'sales', mkt:'marketing', biz:'business'};
+const MOVED = {contact:'contact/', services:'#topics', topics:'#topics', divisions:'#topics', plans:'plans/', faq:'faq/', how:'how/', builder:'builder/', try:'try/', calc:'calculator/'};
+// Sections live on their own pages: an in-page link whose target is not on this page goes to the page that holds it.
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]'); if (!a) return;
+  const id = a.getAttribute('href').slice(1); if (!id || id.indexOf('svc-') === 0 || document.getElementById(id)) return;
+  const to = MOVED[id];
+  if (to != null) { e.preventDefault(); location.href = BASE + to; }
+});
 // Where the visitor came from: kept for this visit and sent with the lead so the team knows which page or ad worked.
 const UTM = (function(){
   let u = '';
@@ -386,7 +396,7 @@ function renderFilters(){
 function renderGrid(){
   const g = $('grid'); if (!g) return; g.textContent = '';
   GROUPS.forEach(([cat, title]) => {
-    const list = S.filter(s => s.cat === cat && (filter === 'all' || divOf(s) === filter));
+    const list = S.filter(s => s.cat === cat && (filter === 'all' || divOf(s) === filter) && (!PAGE_CAT || s.cat === PAGE_CAT) && (!PAGE_LIVE || DEMOS[s.id]));
     if (!list.length) return;
     const grp = el('div',{class:'grp'}, el('h3',{class:'gh',text:title}));
     list.forEach(s => {
@@ -450,7 +460,7 @@ function renderDetail(s){
   const cta = el('a',{class:'btn',href:'#contact',text:'احجز استشارة مجانية'}); cta.addEventListener('click', () => { preSvc = s.name; });
   const tags = el('div',{style:'display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center'}, s.top ? el('span',{class:'tag',text:'الأكثر طلبًا'}) : null, DEMOS[s.id] ? liveTag() : null);
   d.append(el('section',{class:'dband'}, el('div',{class:'in'},
-    el('nav',{class:'crumb','aria-label':'المسار'}, el('a',{href:BASE + '#services',text:'الخدمات'}), el('span',{text:'›'}), el('span',{text:CATS.find(c => c.id === divOf(s)).t})),
+    el('nav',{class:'crumb','aria-label':'المسار'}, el('a',{href:BASE,text:'الرئيسية'}), el('span',{text:'›'}), el('a',{href:BASE + DIVURL[divOf(s)],text:CATS.find(c => c.id === divOf(s)).t}), ...(divOf(s) === 'auto' ? [el('span',{text:'›'}), el('a',{href:BASE + 'automation/' + CATSLUG[s.cat] + '/',text:GROUPS.find(g => g[0] === s.cat)[1]})] : []), el('span',{text:'›'}), el('span',{'aria-current':'page',text:s.name})),
     el('div',{class:'dhead'}, tags, el('h1',{text:s.name}), el('p',{class:'sub',text:s.sub}), el('p',{class:'muted',text:'مناسبة لـ: ' + s.best})),
     el('div',{class:'dcur'}, el('div',{class:'cur',role:'group','aria-label':'عملة الأسعار'}, el('button',{type:'button','data-cur':'eg','aria-pressed':String(cur === 'eg'),text:'مصر، ج.م'}), el('button',{type:'button','data-cur':'us','aria-pressed':String(cur === 'us'),text:'الخليج، USD'}))),
     el('div',{class:'kpis'},
@@ -472,6 +482,7 @@ function showService(){ const s = S.find(x => x.id === PAGE_SVC); if (s) renderD
 function route(){
   const h = location.hash.slice(1);
   if (h.startsWith('svc-') && S.some(x => 'svc-' + x.id === h)) { location.replace(svcUrl(h.slice(4))); return; }
+  if (h && !document.getElementById(h) && MOVED[h] && MOVED[h][0] !== '#') { location.replace(BASE + MOVED[h]); return; }
   if (h) { const t = document.getElementById(h); if (t) requestAnimationFrame(() => t.scrollIntoView()); }
 }
 document.querySelectorAll('[data-div]').forEach(a => a.addEventListener('click', () => { filter = a.getAttribute('data-div'); renderFilters(); renderGrid(); }));
@@ -498,7 +509,9 @@ const cfForm = $('cf'); if (cfForm) cfForm.addEventListener('submit', e => {
 });
 renderFilters(); setCur(cur); renderInds();
 if (PAGE === 'service') { const s = S.find(x => x.id === PAGE_SVC); if (s) preSvc = s.name; }
-renderSelect(); preSvc = ''; route();
+renderSelect(); preSvc = '';
+try { const pf = JSON.parse(sessionStorage.getItem('rafiq-prefill') || 'null'); if (pf && $('f-msg')) { $('f-msg').value = pf.msg || ''; if (pf.svc) $('f-svc').value = pf.svc; sessionStorage.removeItem('rafiq-prefill'); } } catch (e) {}
+route();
 window.addEventListener('hashchange', route);
 
 (function(){
@@ -608,6 +621,7 @@ window.addEventListener('hashchange', route);
         const m = $('f-msg'), sel = $('f-svc');
         if (m) m.value = 'أريد باقة من ' + list.length + ' خدمات: ' + list.map(s => s.name).join('، ') + '. التكلفة التقريبية الظاهرة في الموقع: ' + total + '.';
         if (sel) sel.value = list[0].name;
+        try { sessionStorage.setItem('rafiq-prefill', JSON.stringify({msg:'أريد باقة من ' + list.length + ' خدمات: ' + list.map(s => s.name).join('، ') + '. التكلفة التقريبية الظاهرة في الموقع: ' + total + '.', svc:list[0].name})); } catch (e) {}
       });
       sum.append(go, el('p',{class:'fine',text:'تكلفة تشغيل الرسائل والأدوات الشهرية تُحسب حسب استهلاكك. السعر النهائي نثبّته معك في الاستشارة المجانية.'}));
     };
@@ -627,5 +641,5 @@ window.addEventListener('hashchange', route);
     });
   }), {rootMargin:'0px 0px -7% 0px'});
   document.documentElement.classList.add('rv');
-  document.querySelectorAll('.trust, .trytxt, .band .head, .dv, .pain, .calc, .inds, .step, .bld > *, .plan, .faq details, .contact > *').forEach(n => { n.classList.add('rvl'); io.observe(n); });
+  document.querySelectorAll('.trust, .tcard, .trytxt, .band .head, .dv, .pain, .calc, .inds, .step, .bld > *, .plan, .faq details, .contact > *').forEach(n => { n.classList.add('rvl'); io.observe(n); });
 })();

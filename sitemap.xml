@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://rafiq-ai-delta.vercel.app/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/automation/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/automation/reply/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/automation/sales/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/automation/marketing/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/automation/business/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/apps/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/web/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/try/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/builder/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/calculator/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/industries/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/plans/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/how/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/faq/</loc></url>
+  <url><loc>https://rafiq-ai-delta.vercel.app/contact/</loc></url>
   <url><loc>https://rafiq-ai-delta.vercel.app/services/whatsapp-booking/</loc></url>
   <url><loc>https://rafiq-ai-delta.vercel.app/services/comment-reply/</loc></url>
   <url><loc>https://rafiq-ai-delta.vercel.app/services/voice-agent/</loc></url>
