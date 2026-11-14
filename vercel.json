@@ -1,6 +1,18 @@
 {
   "cleanUrls": true,
   "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/services/voice-agent",
+      "destination": "/automation/reply/",
+      "permanent": false
+    },
+    {
+      "source": "/services/voice-agent/",
+      "destination": "/automation/reply/",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
