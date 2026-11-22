@@ -455,10 +455,13 @@ header.top{view-transition-name:site-header}
 /* ---------- ZORIX skin: ink, paper, silver and one sky-blue action. Engineered geometry: tight radii, hairlines, no bubble tails. ---------- */
 :root{--r:16px;--hair:rgba(199,205,214,.14);--hair2:rgba(199,205,214,.28);--metal:linear-gradient(120deg,#F3F2EF 0%,#C7CDD6 38%,#8A93A3 62%,#E4E6EA 100%)}
 .logo{direction:ltr;gap:12px}
-.logo b{font-family:'Space Grotesk',sans-serif;font-size:18.5px;font-weight:600;letter-spacing:.2em;line-height:1}
-/* the wordmark is Z [eye] R I X: the eye stands in for the letter O. Its ring takes the O's place exactly in Space Grotesk 600: .728em tall on the O's overshoot line,
-   the O's .052em side bearings, plus the .2em tracking that inline SVG does not receive. The 64-unit box has 2 units of air around the ring, hence the slightly larger box. */
-.logo b svg.eye{display:inline-block;width:.776em;height:.776em;vertical-align:-.038em;margin:0 .228em 0 .028em}
+.logo b{font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:.2em;line-height:1}
+/* the wordmark is Z [eye] R I X: the eye stands in for the letter O. As in the brand guide's own artwork the eye is about 1.2x the capital height,
+   centred on the capitals, and it gets the .2em tracking that inline SVG does not receive. */
+.logo b svg.eye{display:inline-block;width:.9em;height:.9em;vertical-align:-.1em;margin:0 .2em 0 0}
+.logo b{font-size:23px}
+@media (max-width:560px){.logo b{font-size:19.5px}}
+@media (max-width:400px){.logo b{font-size:17.5px}}
 .btn{border-radius:10px}
 .fab{border-radius:12px}
 .tcard,.plan,.plan.hl,.ind,.calc,.bsum,form.cf,.demo,.story,.kpis,.dcta,.pains{border-radius:16px}
