@@ -455,8 +455,10 @@ header.top{view-transition-name:site-header}
 /* ---------- ZORIX skin: ink, paper, silver and one sky-blue action. Engineered geometry: tight radii, hairlines, no bubble tails. ---------- */
 :root{--r:16px;--hair:rgba(199,205,214,.14);--hair2:rgba(199,205,214,.28);--metal:linear-gradient(120deg,#F3F2EF 0%,#C7CDD6 38%,#8A93A3 62%,#E4E6EA 100%)}
 .logo{direction:ltr;gap:12px}
-.logo svg{width:36px;height:31px}
 .logo b{font-family:'Space Grotesk',sans-serif;font-size:18.5px;font-weight:600;letter-spacing:.2em;line-height:1}
+/* the wordmark is Z [eye] R I X: the eye stands in for the letter O. Its ring takes the O's place exactly in Space Grotesk 600: .728em tall on the O's overshoot line,
+   the O's .052em side bearings, plus the .2em tracking that inline SVG does not receive. The 64-unit box has 2 units of air around the ring, hence the slightly larger box. */
+.logo b svg.eye{display:inline-block;width:.776em;height:.776em;vertical-align:-.038em;margin:0 .228em 0 .028em}
 .btn{border-radius:10px}
 .fab{border-radius:12px}
 .tcard,.plan,.plan.hl,.ind,.calc,.bsum,form.cf,.demo,.story,.kpis,.dcta,.pains{border-radius:16px}
