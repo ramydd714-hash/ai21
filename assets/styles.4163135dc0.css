@@ -676,3 +676,182 @@ img,svg,canvas,video{max-width:100%}
   .cout b{font-size:27px}
   .bsum .tot{font-size:22px}
 }
+
+/* ===== The service page ================================================================
+   Loaded last and not rescaled: sizes here are the real sizes for IBM Plex Sans Arabic / Space Grotesk.
+   Every rule is scoped to .dband (the service page), so no other page is touched.
+   The page in order: name + one sentence + price row + one action  ->  the example (the picture of the page)
+   ->  three results  ->  three steps  ->  folded details  ->  closing action  ->  previous / next.
+   One accent (ice blue) for the action, the step numbers and the open/close marks. Hairlines, not boxes. */
+.dband{--silver:#C7CDD6;--screen:#0B0D12;padding-block:22px 96px}
+.dband .crumb{font-size:14px}
+.dband h2{font-size:clamp(21px,2.1vw,27px);font-weight:600;line-height:1.45}
+
+/* ---- head: the name is quiet, the sentence is the headline ---- */
+.dband .svh{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:clamp(24px,3.4vw,46px)}
+.dband .svh h1{font-size:clamp(18px,1.6vw,22px);font-weight:500;line-height:1.5;color:var(--silver)}
+.dband .one{margin-top:12px;max-width:18em;font-size:clamp(29px,4vw,54px);font-weight:600;line-height:1.36;text-wrap:balance}
+.dband .figs{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 30px;margin-top:clamp(24px,2.8vw,36px);max-width:100%}
+.dband .kpis{display:flex;align-items:stretch;margin:0;max-width:100%;border:0;border-block:1px solid var(--line);border-radius:0;text-align:start}
+.dband .dcur{order:2;margin:0}
+.dband .dcur+.kpis{margin-top:0}
+.dband .kpi{display:flex;flex-direction:column;gap:1px;padding:13px 30px;min-width:0}
+.dband .kpi:first-child{padding-inline-start:4px}
+.dband .kpi:last-child{padding-inline-end:4px}
+.dband .kpi+.kpi{border-top:0;border-inline-start:1px solid var(--line)}
+.dband .kpi span{font-size:13px;font-weight:500;color:var(--mute)}
+.dband .kpi b{font-size:19px;font-weight:600;line-height:1.5;font-variant-numeric:tabular-nums;text-wrap:balance}
+.dband .kpi b.sm{font-size:16px;font-weight:500;line-height:1.75;max-width:23em}
+.dband .cur{padding:0;border:0;border-radius:0}
+.dband .cur button{min-height:36px;padding:0 14px;border-radius:0;font-size:14px;font-weight:500;color:var(--mute)}
+.dband .cur button+button{border-inline-start:1px solid var(--line)}
+.dband .cur button:hover{color:var(--text)}
+.dband .cur button[aria-pressed="true"]{background:transparent;color:var(--text);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:1.5px;text-underline-offset:8px}
+.dband .acts{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 30px;margin-top:clamp(22px,2.4vw,30px)}
+.dband .jump{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--silver);font-size:16px;font-weight:500;text-decoration:none}
+.dband .jump svg{color:var(--accent)}
+.dband .jump:hover{color:var(--text)}
+.dband .jump:hover span{text-decoration:underline;text-underline-offset:6px;text-decoration-color:var(--line2)}
+
+/* ---- the example: one framed screen; with a live demo the controls sit beside it ---- */
+.dband .exb{margin-top:clamp(40px,4.6vw,60px);scroll-margin-top:96px}
+.dband .exb.solo{max-width:760px;margin-inline:auto;padding:26px 28px 28px;border-radius:16px;border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));background:var(--screen)}
+.dband .cap{font-size:13.5px;line-height:1.7;color:var(--mute)}
+.dband .exb.solo .cap{margin-bottom:14px;font-weight:500}
+.dband .demo{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:0;align-items:stretch;padding:0;border-radius:16px;border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));background:var(--surface)}
+.dband .demo>.dform{justify-content:center;gap:14px;padding:34px 34px 36px}
+.dband .demo .livetag{font-size:13px;font-weight:500}
+.dband .demo .dform>.muted{font-size:16px;line-height:1.8}
+.dband .demo form.dform{gap:12px;margin-top:6px}
+.dband .demo .fld label{font-size:13.5px;font-weight:500}
+.dband .demo .fld input,.dband .demo .fld select,.dband .demo .fld textarea,.dband .demo .chatin input{border-width:1px;border-radius:10px;font-size:16px}
+.dband .demo .btn{min-height:50px;font-size:16px}
+.dband .demo>.chat{gap:10px;min-height:300px;max-height:600px;padding:26px 28px 28px;border:0;border-inline-start:1px solid var(--line);border-radius:0;border-start-end-radius:15px;border-end-end-radius:15px;background:var(--screen);scroll-margin:88px 0 84px}
+.dband .demo>.chat:has(>.cap):not(:has(>.turn)){max-height:none}
+/* beside the controls, a screen that holds a live result takes the height of the controls and scrolls inside it */
+@media (min-width:861px){.dband .demo>.chat:not(:has(>.cap)){contain:size;max-height:none}}
+.dband .exb .b{font-size:16.5px;line-height:1.7}
+/* narration lines (what happens around the messages) are notes in the margin: silver, with a hairline at the reading edge */
+.dband .exb .b.n{padding:0;padding-inline-start:12px;border-radius:0;border-inline-start:1px solid var(--line2);font-size:15px;line-height:1.75;color:var(--silver)}
+.dband .exb .b.cap,.dband .exb .b.fine,.dband .exb .b.turn,.dband .exb .b.hint{padding-inline-start:0;border-inline-start:0;font-size:13.5px;line-height:1.7;color:var(--mute)}
+.dband .exb .b.cap{font-weight:500;margin-bottom:4px}
+.dband .exb .b.turn{margin-top:10px;padding-top:14px;border-top:1px solid var(--line);color:var(--silver)}
+.dband .exb .b.hint{margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
+.dband .exb .hint:only-child{border-top:0;padding-top:0;margin-top:0}
+.dband .exb .qr span{min-height:38px;font-size:15px;font-weight:500}
+.dband .exb .qr span:first-child{background:transparent;color:var(--accent);border-color:color-mix(in srgb,var(--accent) 55%,transparent)}
+
+/* ---- three results: columns divided by hairlines, not cards, not numbered ---- */
+.dband .wins,.dband .how{margin-top:clamp(56px,7.4vw,104px)}
+.dband .wl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:22px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.dband .win{padding:26px 34px 6px}
+.dband .win:first-child{padding-inline-start:0}
+.dband .win:last-child{padding-inline-end:0}
+.dband .win+.win{border-inline-start:1px solid var(--line)}
+.dband .win h3{font-size:20px;font-weight:600;line-height:1.5}
+.dband .win p{margin-top:6px;font-size:16.5px;line-height:1.8;color:var(--mute);text-wrap:pretty}
+
+/* ---- three steps: a real sequence, so it is numbered and the numbers sit on one line ---- */
+.dband .sl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 34px;margin:26px 0 0;padding:0;list-style:none;counter-reset:st}
+.dband .sl li{position:relative;padding-top:54px;counter-increment:st}
+.dband .sl li::before{content:counter(st);position:absolute;top:0;inset-inline-start:0;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid color-mix(in srgb,var(--accent) 60%,transparent);color:var(--accent);font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;line-height:1}
+.dband .sl li::after{content:"";position:absolute;top:18px;inset-inline:50px -20px;height:1px;background:var(--line)}
+.dband .sl li:last-child::after{display:none}
+.dband .sl p{max-width:20em;font-size:18px;line-height:1.75;text-wrap:balance}
+
+/* ---- folded details: native <details>, closed until asked for ---- */
+.dband .folds{margin-top:clamp(56px,7.4vw,104px);border-top:1px solid var(--line)}
+.dband .fold{border-bottom:1px solid var(--line)}
+.dband .fold summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:66px;padding:12px 2px;font-size:18px;font-weight:600;line-height:1.5;cursor:pointer;list-style:none}
+.dband .fold summary::-webkit-details-marker{display:none}
+@media (hover:hover){.dband .fold summary:hover{color:var(--accent)}}
+.dband .fold summary i{position:relative;flex:none;width:14px;height:14px}
+.dband .fold summary i::before,.dband .fold summary i::after{content:"";position:absolute;inset:6px 0 auto;height:2px;border-radius:1px;background:var(--accent);transition:transform .25s ease}
+.dband .fold summary i::after{transform:rotate(90deg)}
+.dband .fold[open] summary i::after{transform:none}
+.dband .fb{padding:2px 2px 30px}
+.dband .ticks,.dband .fit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 34px;max-width:900px;margin:0;padding:0;list-style:none;font-size:16.5px;line-height:1.7}
+.dband .ticks li{display:flex;gap:12px;align-items:flex-start}
+.dband .ticks svg{flex:none;margin-top:5px;color:var(--accent)}
+.dband .fit li{position:relative;padding-inline-start:20px}
+.dband .fit li::before{content:"";position:absolute;inset-inline-start:2px;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.dband .qa{display:flex;flex-direction:column;gap:20px;max-width:760px;margin:0}
+.dband .qa dt{font-size:16.5px;font-weight:600;line-height:1.6}
+.dband .qa dd{margin:4px 0 0;font-size:16.5px;line-height:1.8;color:var(--mute)}
+
+/* ---- closing action and neighbours ---- */
+.dband .dcta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 30px;margin-top:clamp(56px,7.4vw,104px);padding:34px 36px;border-radius:16px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+.dband .dcta h2{max-width:22em;font-size:clamp(20px,2.1vw,26px)}
+.dband .dcta .btn{background:var(--brand);color:var(--on-brand)}
+.dband .dcta .btn:hover{background:var(--brand-2)}
+.dband .pn{margin-top:26px;border-top:0}
+.dband .pn a span{font-size:13.5px}
+.dband .pn a b{font-size:18px;font-weight:600}
+
+@media (max-width:1024px){
+  .dband .cur button{min-height:44px}
+  .dband .exb .qr span{min-height:44px}
+}
+@media (max-width:860px){
+  .dband .demo{grid-template-columns:minmax(0,1fr)}
+  .dband .demo>.chat{order:-1;min-height:0;padding:20px 18px 22px;border-inline-start:0;border-bottom:1px solid var(--line);border-radius:15px 15px 0 0}
+  .dband .demo>.dform{padding:24px 18px 22px}
+  .dband .kpi{padding-inline:20px}
+  .dband .win{padding-inline:22px}
+  .dband .sl{gap:0 22px}
+}
+/* ---- phones: everything starts from the reading edge; the head and the start of the example fit in a screen and a half ---- */
+@media (max-width:700px){
+  .dband{padding-block:6px 64px}
+  .dband .crumb>span:nth-last-child(-n+2){display:none}
+  .dband .svh{align-items:stretch;text-align:start;padding-top:8px}
+  .dband .svh h1{font-size:18px;line-height:1.5}
+  .dband .one{margin-top:8px;max-width:none;font-size:clamp(26px,7.5vw,30px);line-height:1.48}
+  .dband .figs{flex-direction:column;align-items:stretch;gap:12px;margin-top:22px}
+  .dband .kpis{flex-direction:column}
+  .dband .kpi,.dband .kpi:first-child,.dband .kpi:last-child{flex-direction:row;align-items:baseline;justify-content:space-between;gap:2px 18px;padding:10px 0}
+  .dband .kpi+.kpi{border-inline-start:0;border-top:1px solid var(--line)}
+  .dband .kpi span{flex:none}
+  .dband .kpi b,.dband .kpi b.sm{max-width:none;font-size:16.5px;font-weight:600;line-height:1.6;text-align:end}
+  .dband .kpi b.sm{font-size:15px;font-weight:500}
+  .dband .kpi:last-child{flex-direction:column;align-items:flex-start;gap:0}
+  .dband .kpi:last-child b{text-align:start}
+  .dband .dcur{align-self:flex-start;margin-top:-6px}
+  .dband .cur button:first-child{padding-inline-start:0}
+  .dband .acts{flex-direction:column;align-items:stretch;gap:2px;margin-top:20px}
+  .dband .acts .btn{width:100%}
+  .dband .jump{justify-content:center}
+  .dband .exb{margin-top:26px}
+  .dband .exb.solo{padding:20px 18px 22px}
+  .dband .exb .b{font-size:16px;line-height:1.7}
+  .dband .exb .b.n{font-size:15px}
+  .dband .exb .b.cap,.dband .exb .b.fine,.dband .exb .b.turn,.dband .exb .b.hint{font-size:13.5px}
+  .dband .demo .dform>.muted{font-size:15px}
+  .dband .wins,.dband .how,.dband .folds,.dband .dcta{margin-top:56px}
+  .dband .wl{grid-template-columns:minmax(0,1fr);margin-top:14px}
+  .dband .win,.dband .win:first-child,.dband .win:last-child{padding:18px 0}
+  .dband .win+.win{border-inline-start:0;border-top:1px solid var(--line)}
+  .dband .win:last-child{padding-bottom:0}
+  .dband .win h3{font-size:18px}
+  .dband .win p{margin-top:4px;font-size:16px}
+  .dband .sl{grid-template-columns:minmax(0,1fr);gap:0;margin-top:20px}
+  .dband .sl li{min-height:36px;padding:4px 0 30px;padding-inline-start:52px}
+  .dband .sl li:last-child{padding-bottom:0}
+  .dband .sl li::after{top:42px;bottom:6px;inset-inline:17.5px auto;width:1px;height:auto}
+  .dband .sl p{max-width:none;font-size:16.5px}
+  .dband .fold summary{min-height:60px;font-size:17px}
+  .dband .fb{padding-bottom:24px}
+  .dband .ticks,.dband .fit{grid-template-columns:minmax(0,1fr);gap:10px;font-size:16px}
+  .dband .qa dt,.dband .qa dd{font-size:16px}
+  .dband .dcta{flex-direction:column;align-items:stretch;gap:16px;padding:24px 20px;border-radius:16px}
+  .dband .dcta .btn{width:100%}
+  .dband .pn a b{font-size:16.5px}
+}
+@media (max-width:380px){
+  .dband .svh h1{font-size:17px}
+}
+/* the example plays once when it comes into view (classes are set by script only; never for reduced motion) */
+.dband .exb.wait .sd{opacity:0}
+.dband .exb.play .sd{animation:exin .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * .36s)}
+@keyframes exin{from{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){.dband .fold summary i::before,.dband .fold summary i::after{transition:none}.dband .exb.wait .sd{opacity:1}.dband .exb.play .sd{animation:none}}
