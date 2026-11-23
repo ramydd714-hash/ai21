@@ -3,6 +3,28 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "zorix-ai.vercel.app"
+        }
+      ],
+      "destination": "https://zoriix.tech/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "rafiq-ai-delta.vercel.app"
+        }
+      ],
+      "destination": "https://zoriix.tech/:path*",
+      "permanent": true
+    },
+    {
       "source": "/services/voice-agent",
       "destination": "/automation/reply/",
       "permanent": false
