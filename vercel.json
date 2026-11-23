@@ -3,25 +3,25 @@
   "trailingSlash": true,
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "zorix-ai.vercel.app"
         }
       ],
-      "destination": "https://zoriix.tech/:path*",
+      "destination": "https://zoriix.tech/$1",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "rafiq-ai-delta.vercel.app"
         }
       ],
-      "destination": "https://zoriix.tech/:path*",
+      "destination": "https://zoriix.tech/$1",
       "permanent": true
     },
     {
