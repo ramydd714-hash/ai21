@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://zorix-ai.vercel.app/sitemap.xml
+Sitemap: https://zoriix.tech/sitemap.xml
