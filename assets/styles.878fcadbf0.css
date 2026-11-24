@@ -681,7 +681,8 @@ img,svg,canvas,video{max-width:100%}
    Loaded last and not rescaled: sizes here are the real sizes for IBM Plex Sans Arabic / Space Grotesk.
    Every rule is scoped to .dband (the service page), so no other page is touched.
    The page in order: name + one sentence + price row + one action  ->  the example (the picture of the page)
-   ->  three results  ->  three steps  ->  folded details  ->  closing action  ->  previous / next.
+   ->  three results  ->  three steps  ->  the technical view (flow diagram, specs, connections)  ->  folded details
+   ->  closing action  ->  previous / next.
    One accent (ice blue) for the action, the step numbers and the open/close marks. Hairlines, not boxes. */
 .dband{--silver:#C7CDD6;--screen:#0B0D12;padding-block:22px 96px}
 .dband .crumb{font-size:14px}
@@ -758,6 +759,60 @@ img,svg,canvas,video{max-width:100%}
 .dband .sl li::after{content:"";position:absolute;top:18px;inset-inline:50px -20px;height:1px;background:var(--line)}
 .dband .sl li:last-child::after{display:none}
 .dband .sl p{max-width:20em;font-size:18px;line-height:1.75;text-wrap:balance}
+
+/* ---- the technical view ("under the hood"): the path of one request as a block diagram, then two hairline tables ----
+   Wide screens: one line of blocks, right to left, joined by a rail that runs through the kind labels.
+   Narrow screens: the same blocks on a vertical spine. The assistant's block is the one accent; a person's block is dashed.
+   The side branch hangs under the block it leaves from, on a dashed line, and ends in a dashed block. */
+.dband .tech{margin-top:clamp(56px,7.4vw,104px)}
+.dband .tk-g{margin-top:22px;padding-top:24px;border-top:1px solid var(--line)}
+.dband .tk-cap{font-size:13.5px;font-weight:500;line-height:1.7;color:var(--mute)}
+.dband .tk-fl{--gap:24px;display:flex;flex-direction:column;gap:var(--gap);margin:14px 0 0;padding:0;list-style:none}
+.dband .tk-n{position:relative;min-width:0}
+.dband .tk-b{position:relative;z-index:1;display:grid;grid-template-columns:9px minmax(0,1fr) auto;gap:0 12px;align-items:baseline;padding:11px 16px 12px;border:1px solid var(--line2);border-radius:10px;background:var(--bg)}
+/* the mark of the block sits on the spine: ring = comes in, filled = goes out, square = a system, ice blue = the assistant */
+.dband .tk-b::before{content:"";align-self:start;width:9px;height:9px;margin-top:9px;border:1px solid var(--silver);border-radius:50%}
+.dband .tk-k{grid-column:3;grid-row:1;font-size:13px;font-weight:500;line-height:1.7;color:var(--mute)}
+.dband .tk-t{grid-column:2;grid-row:1;font-size:16px;font-weight:500;line-height:1.65;text-wrap:pretty}
+.dband .k-ai .tk-b{border-color:color-mix(in srgb,var(--accent) 70%,transparent);background:color-mix(in srgb,var(--accent) 9%,var(--bg))}
+.dband .k-ai .tk-k{color:var(--accent)}
+.dband .k-ai .tk-b::before{border-color:var(--accent);background:var(--accent)}
+.dband .k-sys .tk-b{border-color:var(--line);background:var(--surface)}
+.dband .k-sys .tk-b::before{border-radius:1px}
+.dband .k-out .tk-b::before{background:var(--silver)}
+.dband .k-human .tk-b{border-style:dashed}
+.dband .k-human .tk-k{color:var(--silver)}
+/* the spine and its direction mark (drawn in the gap after every block but the last) */
+.dband .tk-n:not(:last-child)::after{content:"";position:absolute;inset-block:0 calc(-1 * var(--gap));inset-inline-start:21px;width:1px;background:var(--line2)}
+.dband .tk-n:not(:last-child)::before{content:"";position:absolute;z-index:1;bottom:calc(4px - var(--gap));inset-inline-start:18px;width:7px;height:7px;border:solid var(--silver);border-width:0 1px 1px 0;transform:rotate(45deg)}
+/* the side branch */
+.dband .tk-x{display:flex;flex-direction:column;gap:8px;margin-inline-start:46px;padding-top:9px;border-inline-start:1px dashed var(--line2)}
+.dband .tk-w{padding-inline-start:13px;font-size:13.5px;line-height:1.7;color:var(--mute)}
+.dband .tk-o{padding:9px 13px 10px;border:1px dashed var(--line2);border-inline-start:0;border-radius:10px;border-start-start-radius:0;border-end-start-radius:0;font-size:15px;line-height:1.7;color:var(--silver)}
+/* the two tables: what it is (specs) and what it connects to */
+.dband .tk-two{display:grid;grid-template-columns:minmax(0,1fr);gap:34px;margin-top:38px}
+.dband .tk-tb{margin:8px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.dband .tk-tb>*{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:2px 20px;align-items:baseline;padding:11px 0 12px;border-bottom:1px solid var(--line)}
+.dband .tk-tb dt,.dband .tk-tb li span{font-size:15px;line-height:1.7;color:var(--mute)}
+.dband .tk-tb dd,.dband .tk-tb li b{margin:0;font-size:16px;font-weight:500;line-height:1.7;color:var(--text)}
+@media (min-width:701px){
+  .dband .tk-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 48px;align-items:start}
+  .dband .tk-two{margin-top:0}
+}
+@media (min-width:1100px){
+  .dband .tk-g{display:block}
+  .dband .tk-fl{--gap:30px;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));grid-template-rows:auto auto;gap:0 var(--gap);margin-top:16px}
+  .dband .tk-fl.n6{--gap:22px}
+  .dband .tk-n{display:grid;grid-row:span 2;grid-template-rows:subgrid;align-content:start}
+  .dband .tk-b{grid-template-columns:9px minmax(0,1fr);gap:8px 9px;align-items:center;align-content:start;padding:13px 16px 18px}
+  .dband .tk-b::before{align-self:center;margin-top:0}
+  .dband .tk-k{grid-column:2}
+  .dband .tk-t{grid-column:1 / -1;grid-row:2}
+  .dband .tk-n:not(:last-child)::after{inset-block:25px auto;inset-inline:auto calc(-1 * var(--gap));width:var(--gap);height:1px}
+  .dband .tk-n:not(:last-child)::before{top:22px;bottom:auto;inset-inline:auto calc(3px - var(--gap));border-width:0 0 1px 1px}
+  .dband .tk-x{margin-inline-start:21px}
+  .dband .tk-two{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 56px;margin-top:52px}
+}
 
 /* ---- folded details: native <details>, closed until asked for ---- */
 .dband .folds{margin-top:clamp(56px,7.4vw,104px);border-top:1px solid var(--line)}
@@ -839,6 +894,8 @@ img,svg,canvas,video{max-width:100%}
   .dband .sl li:last-child{padding-bottom:0}
   .dband .sl li::after{top:42px;bottom:6px;inset-inline:17.5px auto;width:1px;height:auto}
   .dband .sl p{max-width:none;font-size:16.5px}
+  .dband .tech{margin-top:56px}
+  .dband .tk-g{margin-top:14px;padding-top:18px}
   .dband .fold summary{min-height:60px;font-size:17px}
   .dband .fb{padding-bottom:24px}
   .dband .ticks,.dband .fit{grid-template-columns:minmax(0,1fr);gap:10px;font-size:16px}
@@ -853,5 +910,107 @@ img,svg,canvas,video{max-width:100%}
 /* the example plays once when it comes into view (classes are set by script only; never for reduced motion) */
 .dband .exb.wait .sd{opacity:0}
 .dband .exb.play .sd{animation:exin .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * .36s)}
+/* the flow diagram is drawn once, block by block, when it comes into view (same rule: script only, never for reduced motion) */
+.dband .tk-fl.wait .tk-n{opacity:0}
+.dband .tk-fl.play .tk-n{animation:exin .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * .13s)}
 @keyframes exin{from{opacity:0;transform:translateY(8px)}}
-@media (prefers-reduced-motion:reduce){.dband .fold summary i::before,.dband .fold summary i::after{transition:none}.dband .exb.wait .sd{opacity:1}.dband .exb.play .sd{animation:none}}
+@media (prefers-reduced-motion:reduce){.dband .fold summary i::before,.dband .fold summary i::after{transition:none}.dband .exb.wait .sd,.dband .tk-fl.wait .tk-n{opacity:1}.dband .exb.play .sd,.dband .tk-fl.play .tk-n{animation:none}}
+/* ===== The technology page (/tech/) and its teaser on the home page ======================
+   Loaded last and not rescaled: sizes here are the real sizes for IBM Plex Sans Arabic / Space Grotesk.
+   Every rule is scoped to .tkp (the page) or .tkh (the home teaser), so no other page is touched.
+   The page in order: the four layers of every system (the one drawing of the page)  ->  the rules we work by
+   ->  how a system is tested and handed over (a sequence, so it is numbered)  ->  ownership and data, as questions.
+   Same language as the service page: hairlines, one accent (ice blue) kept for the assistant. */
+.tkp{--silver:#C7CDD6}
+.tkp .tkp-s+.tkp-s{margin-top:clamp(64px,7.4vw,104px)}
+.tkp h2{font-size:clamp(21px,2.1vw,27px);font-weight:600;line-height:1.45}
+.tkp h3{font-size:18px;font-weight:600;line-height:1.55}
+.tkp p,.tkp dd{margin:0;font-size:16.5px;line-height:1.8;color:var(--mute);text-wrap:pretty}
+
+/* ---- the layers: four bands, top to bottom, on one spine ---- */
+.tkp .tkp-ly{--gap:34px;display:flex;flex-direction:column;gap:var(--gap);margin:24px 0 0;padding:0;list-style:none}
+.tkp .tkp-ly li{position:relative;display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr);gap:4px 40px;align-items:baseline;padding:28px 30px 30px;border:1px solid var(--line2);border-radius:12px;background:var(--bg)}
+.tkp .tkp-ly h3{display:flex;align-items:baseline;gap:13px;font-size:22px;line-height:1.5}
+.tkp .tkp-ly h3::before{content:"";flex:none;align-self:center;width:9px;height:9px;border:1px solid var(--silver);border-radius:50%}
+.tkp .tkp-ly li.ai{border-color:color-mix(in srgb,var(--accent) 70%,transparent);background:color-mix(in srgb,var(--accent) 9%,var(--bg))}
+.tkp .tkp-ly li.ai h3::before{border-color:var(--accent);background:var(--accent)}
+.tkp .tkp-ly li.ai p{color:var(--silver)}
+.tkp .tkp-ly li:last-child{border-color:var(--line);background:var(--surface)}
+.tkp .tkp-ly li:last-child h3::before{border-radius:1px}
+.tkp .tkp-ly li+li::before{content:"";position:absolute;bottom:100%;inset-inline-start:34px;width:1px;height:var(--gap);background:var(--line2)}
+.tkp .tkp-ly li+li::after{content:"";position:absolute;bottom:calc(100% + 4px);inset-inline-start:31px;width:7px;height:7px;border:solid var(--silver);border-width:0 1px 1px 0;transform:rotate(45deg)}
+
+/* ---- the rules: not a sequence, so no numbers; three columns on hairlines ---- */
+.tkp .tkp-pr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 44px;margin:22px 0 0;padding:0;list-style:none}
+.tkp .tkp-pr li{padding:22px 0 28px;border-top:1px solid var(--line)}
+.tkp .tkp-pr p{margin-top:6px;font-size:16px}
+
+/* ---- testing and handover: a real sequence, numbered on one line ---- */
+.tkp .tkp-q{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:0 34px;margin:26px 0 0;padding:0;list-style:none;counter-reset:tq}
+.tkp .tkp-q li{position:relative;padding-top:54px;counter-increment:tq}
+.tkp .tkp-q li::before{content:counter(tq);position:absolute;top:0;inset-inline-start:0;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid color-mix(in srgb,var(--accent) 60%,transparent);color:var(--accent);font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:500;line-height:1}
+.tkp .tkp-q li::after{content:"";position:absolute;top:18px;inset-inline:50px -20px;height:1px;background:var(--line)}
+.tkp .tkp-q li:last-child::after{display:none}
+.tkp .tkp-q p{margin-top:6px;max-width:19em;font-size:16px}
+
+/* ---- ownership and data: question beside answer, hairline rows ---- */
+.tkp .tkp-d{margin:22px 0 0;border-top:1px solid var(--line)}
+.tkp .tkp-d>div{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:6px 44px;align-items:baseline;padding:22px 0 24px;border-bottom:1px solid var(--line)}
+.tkp .tkp-d dt{font-size:18px;font-weight:600;line-height:1.6;text-wrap:balance}
+
+@media (max-width:980px){
+  .tkp .tkp-pr{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tkp .tkp-q{grid-template-columns:repeat(2,minmax(0,1fr));gap:34px}
+  .tkp .tkp-q li:nth-child(2n)::after{display:none}
+}
+@media (max-width:700px){
+  .tkp .tkp-s+.tkp-s{margin-top:56px}
+  .tkp h3{font-size:17px}
+  .tkp p,.tkp dd{font-size:16px}
+  .tkp .tkp-ly{--gap:26px;margin-top:18px}
+  .tkp .tkp-ly li{grid-template-columns:minmax(0,1fr);padding:16px 16px 18px}
+  .tkp .tkp-ly h3{gap:10px;font-size:18px}
+  .tkp .tkp-ly li+li::before{inset-inline-start:21px}
+  .tkp .tkp-ly li+li::after{inset-inline-start:18px}
+  .tkp .tkp-pr{grid-template-columns:minmax(0,1fr);margin-top:14px}
+  .tkp .tkp-pr li{padding:18px 0 20px}
+  .tkp .tkp-pr li:last-child{padding-bottom:0}
+  .tkp .tkp-q{grid-template-columns:minmax(0,1fr);gap:0;margin-top:20px}
+  .tkp .tkp-q li{min-height:36px;padding:4px 0 28px;padding-inline-start:52px}
+  .tkp .tkp-q li:last-child{padding-bottom:0}
+  .tkp .tkp-q li::after,.tkp .tkp-q li:nth-child(2n)::after{display:block;top:42px;bottom:6px;inset-inline:17.5px auto;width:1px;height:auto}
+  .tkp .tkp-q li:last-child::after{display:none}
+  .tkp .tkp-q p{max-width:none}
+  .tkp .tkp-d{margin-top:14px}
+  .tkp .tkp-d>div{grid-template-columns:minmax(0,1fr);padding:18px 0 20px}
+  .tkp .tkp-d dt{font-size:17px}
+}
+
+/* ---- home teaser: one slim band at the end of the topics, the four layers in one line ---- */
+.tkh{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px 44px;margin-top:44px;padding:22px 28px 23px;border:1px solid var(--line2);border-radius:16px;color:var(--text);text-decoration:none;transition:border-color .2s,background-color .2s}
+.tkh:hover{border-color:var(--brand);background:var(--surface)}
+.tkh .tkh-t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tkh .tkh-t b{font-size:19px;font-weight:600;line-height:1.5}
+.tkh .tkh-t span{font-size:15px;line-height:1.7;color:var(--mute)}
+.tkh .tkh-l{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 0;font-size:14px;line-height:1.7;color:#C7CDD6}
+.tkh .tkh-l i{display:inline-flex;align-items:center;font-style:normal;white-space:nowrap}
+.tkh .tkh-l i+i::before{content:"";width:30px;height:1px;margin-inline:12px;background:var(--line2)}
+.tkh .tkh-l i.ai{color:var(--accent)}
+.tkh .tkh-go{font-size:16px;font-weight:600;line-height:1.7;white-space:nowrap;text-decoration:underline;text-decoration-color:var(--line2);text-decoration-thickness:2px;text-underline-offset:6px}
+.tkh:hover .tkh-go{text-decoration-color:var(--accent)}
+@media (max-width:1040px){
+  .tkh{grid-template-columns:minmax(0,1fr) auto}
+  .tkh .tkh-l{grid-column:1 / -1;grid-row:2;justify-content:flex-start}
+}
+@media (max-width:700px){
+  .tkh{grid-template-columns:minmax(0,1fr);gap:10px;margin-top:28px;padding:16px 16px 18px}
+  .tkh .tkh-t b{font-size:18px}
+  /* on a phone the four names wrap, so the joining lines give way to the diagram's own marks */
+  .tkh .tkh-l{grid-row:auto;gap:2px 16px;font-size:13.5px}
+  .tkh .tkh-l i{gap:7px}
+  .tkh .tkh-l i::before,.tkh .tkh-l i+i::before{content:"";width:7px;height:7px;margin:0;border:1px solid #C7CDD6;border-radius:50%;background:none}
+  .tkh .tkh-l i.ai::before{border-color:var(--accent);background:var(--accent)}
+  .tkh .tkh-l i:last-child::before{border-radius:1px}
+  .tkh .tkh-go{justify-self:start}
+}
+@media (prefers-reduced-motion:reduce){.tkh{transition:none}}
